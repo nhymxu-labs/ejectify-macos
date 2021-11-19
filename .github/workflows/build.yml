@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   push:
     branches: [ build ]
 
@@ -37,9 +38,8 @@ jobs:
                   -srcfolder "build/root/${{ env.INSTALL_PATH }}/${{ env.FULL_PRODUCT_NAME }}" \
                   -volname "${{ env.PRODUCT_NAME }}" "build/${{ env.PRODUCT_MODULE_NAME }}.dmg"
 
-      - name: Release app
-        uses: softprops/action-gh-release@v1
+                  
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: build/${{ env.PRODUCT_MODULE_NAME }}.dmg
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: build/${{ env.PRODUCT_MODULE_NAME }}.dmg
